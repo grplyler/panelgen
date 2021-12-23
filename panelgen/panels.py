@@ -43,7 +43,8 @@ class Spec(object):
 class Panel(object):
     def __init__(self, cnf):
         self.cnf = cnf
-        self.surface = cairo.ImageSurface(cairo.FORMAT_RGB24, cnf.base.w, cnf.base.h)
+        self.surface = cairo.ImageSurface(cairo.FORMAT_RGB24, cnf.base.w,
+                                          cnf.base.h)
         self.c = cairo.Context(self.surface)
         self.c.scale(cnf.base.w, cnf.base.h)
         self.w = cnf.base.w
@@ -76,37 +77,17 @@ class Panel(object):
         # context
         c = self.c
 
-        c.set_line_width(px2f(self.w, cnf.panel.border.width))
+        c.set_line_width(px2f(self.w, cnf.border.thickness))
         c.set_line_cap(cairo.LINE_CAP_ROUND)
         c.set_line_join(cairo.LINE_JOIN_ROUND)
         c.set_fill_rule(cairo.FILL_RULE_WINDING)
-        c.rectangle(cnf.flat['panel.x'], cnf.flat['panel.y'], cnf.flat['panel.w'],
-                    cnf.flat['panel.h'])
+        c.rectangle(cnf.flat['panel.x'], cnf.flat['panel.y'],
+                    cnf.flat['panel.w'], cnf.flat['panel.h'])
         if cnf.panel.fill:
             elevation = cnf.flat['panel.elevation']
             c.set_source_rgb(elevation, elevation, elevation)
             c.fill()
 
-        # Draw border if configured
-        # if cnf.panel.stroke.draw:
-        #     elevation = cnf['panel_elevation']
-        #     elevation += cnf.panel.stroke.elevation
-        #     # TODO: make this relative elevation
-        #     c.set_source_rgb(elevation, elevation, elevation)
-        #     c.stroke()
-
-        # if spec.groove:
-        #     # spec.groove_inset_px = 1
-        #     gspec = copy.deepcopy(spec)
-
-        #     # Draw Inner Grove
-        #     self.groove(gspec, autocolor=True)
-
-        # if spec.rivets:
-        #     rspec = copy.deepcopy(spec)
-
-        #     # Draw Rivets
-        #     self.rivets(rspec)
 
     def rivets(self, spec):
         c = self.c
@@ -164,27 +145,67 @@ class Panel(object):
             y = y + spacing_f
         c.stroke()
 
-    def groove(self, spec, autocolor=True):
-        inset = spec.groove_inset_px
-        inset_f = px2f(self.w, inset)
-        print("inset_f:", inset_f)
-        spec.x = spec.x + inset_f
-        spec.y = spec.y + inset_f
-        spec.h = spec.h - (inset_f * 2)
-        spec.w = spec.w - (inset_f * 2)
+    def border(self, cnf):
         c = self.c
+        inset = cnf.border.inset
+        inset_f = px2f(cnf.base.w, inset)
+        x = cnf.flat['panel.x']
+        y = cnf.flat['panel.y']
+        w = cnf.flat['panel.w']
+        h = cnf.flat['panel.h']
+
+        x = x + inset_f
+        y = y + inset_f
+        h = h - (inset_f * 2)
+        w = w - (inset_f * 2)
 
         # Darken stroke to 80%
-        if autocolor:
-            spec.stroke_rgb = (spec.stroke_rgb[0] - 0.1,
-                               spec.stroke_rgb[1] - 0.1,
-                               spec.stroke_rgb[2] - 0.1)
+        p_elev = cnf.flat['panel.elevation']
+        elev_change = cnf.border.elevation
+        elev = p_elev + elev_change
+        color = (elev, elev, elev)
 
+        thickness = px2f(cnf.base.w, cnf.border.thickness)
         # setup stroke
-        c.set_source_rgb(*spec.stroke_rgb)
+        c.set_source_rgb(*color)
         c.set_line_join(cairo.LINE_JOIN_ROUND)
-        c.set_line_width(px2f(self.w, spec.groove_px))
-        c.rectangle(spec.x, spec.y, spec.w, spec.h)
+        
+        c.set_line_width(px2f(cnf.base.w, cnf.border.thickness))
+        print("thickness:", thickness)
+
+        c.rectangle(x, y, w, h)
+
+        c.stroke()
+
+    def groove(self, cnf):
+        c = self.c
+        inset = cnf.groove.inset
+        inset_f = px2f(cnf.base.w, inset)
+        x = cnf.flat['panel.x']
+        y = cnf.flat['panel.y']
+        w = cnf.flat['panel.w']
+        h = cnf.flat['panel.h']
+
+        x = x + inset_f
+        y = y + inset_f
+        h = h - (inset_f * 2)
+        w = w - (inset_f * 2)
+
+        # Darken stroke to 80%
+        p_elev = cnf.flat['panel.elevation']
+        elev_change = cnf.groove.elevation
+        elev = p_elev + elev_change
+        color = (elev, elev, elev)
+
+        thickness = px2f(cnf.base.w, cnf.groove.thickness)
+        # setup stroke
+        c.set_source_rgb(*color)
+        c.set_line_join(cairo.LINE_JOIN_ROUND)
+        
+        c.set_line_width(px2f(cnf.base.w, cnf.groove.thickness))
+        print("thickness:", thickness)
+
+        c.rectangle(x, y, w, h)
 
         c.stroke()
 
@@ -205,5 +226,3 @@ class Panel(object):
         cr.close_path()
         cr.stroke()
         cr.fill()
-
-

@@ -13,17 +13,19 @@ class Generator(object):
         super().__init__()
         self.cnf = load_config('panelgen/config.yml')
         self.panel = Panel(self.cnf)
-        # print(self.cnf['base_w'])
-        # print(self.cnf.base_w)
-        self.cnf = randomize(self.cnf)
-        print(self.cnf)
-        
-        
     
     def generate(self):
         cnf = self.cnf
         for i in range(cnf.panel.count):
             self.panel.rect(cnf)
+            
+            if cnf.border.draw:
+                self.panel.border(cnf)
+
+            if cnf.groove.draw:
+                self.panel.groove(cnf)
+            
             cnf = randomize(cnf)
+        
         self.panel.save()
         self.panel.display('out.png')
