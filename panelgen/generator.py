@@ -17,13 +17,14 @@ class Generator(object):
     def generate(self):
         cnf = self.cnf
         for i in range(cnf.panel.count):
-            self.panel.rect(cnf)
+            # self.panel.rect(cnf)
+            self.panel.angled(cnf)
             
-            if cnf.border.draw:
-                self.panel.border(cnf)
+            # if cnf.border.draw:
+            #     self.panel.border(cnf)
 
-            if cnf.groove.draw:
-                self.panel.groove(cnf)
+            # if cnf.groove.draw:
+            #     self.panel.groove(cnf)
             
             cnf = randomize(cnf)
         
