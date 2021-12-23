@@ -3,6 +3,11 @@ import numpy as np
 import random
 import cairo
 import math
+import yaml
+
+def load_config(fname):
+    with open(fname) as f:
+        return yaml.safe_load(f)
 
 def f2px(size, f):
     return size * f
