@@ -5,6 +5,7 @@ from sys import argv
 from panelgen.utils import *
 from panelgen import panels
 from panelgen.random import Randomizer
+from panelgen.generator import Generator
 
 # img = new_map(int(argv[1]), int(argv[2]), (0, 0, 0))
 min_w = 0.02
@@ -12,8 +13,14 @@ max_w = 0.3
 min_h = 0.02
 max_h = 0.3
 
-config = load_config('panelgen/config.yml')
-print(config)
+gen = Generator()
+
+# Pull some configuration from command line
+gen.cnf.base.w = int(argv[1])
+gen.cnf.base.h = int(argv[1])
+gen.cnf.panel.count = int(argv[2])
+gen.generate()
+# print(gen.conf)
 exit(1)
 
 spec = panels.Spec(fill_rgb=(0.0, 1, 0.0),
@@ -48,6 +55,7 @@ for i in range(int(argv[2])):
 
 panel.save()
 panel.display('out.png')
+cv2.destroyAllWindows()
 # print(img)
 
 # cv2.imwrite('out.png', img)
