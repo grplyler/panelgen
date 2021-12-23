@@ -39,14 +39,16 @@ class Spec(object):
         self.rivets = rivets
         self.rivet_inset_px = rivet_inset_px
 
+
 class Panel(object):
-    def __init__(self, w, h, color):
-        self.surface = cairo.ImageSurface(cairo.FORMAT_RGB24, w, h)
+    def __init__(self, cnf):
+        self.cnf = cnf
+        self.surface = cairo.ImageSurface(cairo.FORMAT_RGB24, cnf.base.w,
+                                          cnf.base.h)
         self.c = cairo.Context(self.surface)
-        # self.c.set_source_rgb(color[0], color[1], color[2])
-        self.c.scale(w, h)
-        self.w = w
-        self.h = h
+        self.c.scale(cnf.base.w, cnf.base.h)
+        self.w = cnf.base.w
+        self.h = cnf.base.h
 
     def save(self, fname='out.png'):
         self.surface.write_to_png(fname)
@@ -70,40 +72,22 @@ class Panel(object):
         # c.stroke()
         c.fill()
 
-    def rect(self, spec=None, rnd=None):
+    def rect(self, cnf):
 
-        if spec is None:
-            spec = rnd.spec
-        print(spec.x, spec.y, spec.w, spec.h)
+        # context
         c = self.c
 
-        c.set_line_width(px2f(self.w, spec.stroke_px))
+        c.set_line_width(px2f(self.w, cnf.border.thickness))
         c.set_line_cap(cairo.LINE_CAP_ROUND)
         c.set_line_join(cairo.LINE_JOIN_ROUND)
         c.set_fill_rule(cairo.FILL_RULE_WINDING)
-        c.rectangle(spec.x, spec.y, spec.w, spec.h)
-        if spec.fill:
-            c.set_source_rgb(spec.fill_rgb[0], spec.fill_rgb[1],
-                             spec.fill_rgb[2])
+        c.rectangle(cnf.flat['panel.x'], cnf.flat['panel.y'],
+                    cnf.flat['panel.w'], cnf.flat['panel.h'])
+        if cnf.panel.fill:
+            elevation = cnf.flat['panel.elevation']
+            c.set_source_rgb(elevation, elevation, elevation)
             c.fill()
 
-        if spec.stroke:
-            c.set_source_rgb(spec.stroke_rgb[0], spec.stroke_rgb[1],
-                             spec.stroke_rgb[2])
-            c.stroke()
-
-        if spec.groove:
-            # spec.groove_inset_px = 1
-            gspec = copy.deepcopy(spec)
-
-            # Draw Inner Grove
-            self.groove(gspec, autocolor=True)
-            
-        if spec.rivets:
-            rspec = copy.deepcopy(spec)
-
-            # Draw Rivets
-            self.rivets(rspec)
 
     def rivets(self, spec):
         c = self.c
@@ -130,10 +114,10 @@ class Panel(object):
         offset = 0.0
         y = spec.y + inset_f
         x = spec.x + inset_f
-        
+
         # Draw top and bottom rivets
-        while x < (spec.x + spec.w - inset_f):   
-            # print("drawing rivet") 
+        while x < (spec.x + spec.w - inset_f):
+            # print("drawing rivet")
             c.move_to(x, y)
             c.close_path()
             c.move_to(x, spec.y + spec.h - inset_f)
@@ -161,31 +145,69 @@ class Panel(object):
             y = y + spacing_f
         c.stroke()
 
-
-    def groove(self, spec, autocolor=True):
-        inset = spec.groove_inset_px
-        inset_f = px2f(self.w, inset)
-        print("inset_f:", inset_f)
-        spec.x = spec.x + inset_f
-        spec.y = spec.y + inset_f
-        spec.h = spec.h - (inset_f * 2)
-        spec.w = spec.w - (inset_f * 2)
+    def border(self, cnf):
         c = self.c
+        inset = cnf.border.inset
+        inset_f = px2f(cnf.base.w, inset)
+        x = cnf.flat['panel.x']
+        y = cnf.flat['panel.y']
+        w = cnf.flat['panel.w']
+        h = cnf.flat['panel.h']
+
+        x = x + inset_f
+        y = y + inset_f
+        h = h - (inset_f * 2)
+        w = w - (inset_f * 2)
 
         # Darken stroke to 80%
-        if autocolor:
-            spec.stroke_rgb = (spec.stroke_rgb[0] - 0.1,
-                                spec.stroke_rgb[1] - 0.1,
-                                spec.stroke_rgb[2] - 0.1)
+        p_elev = cnf.flat['panel.elevation']
+        elev_change = cnf.border.elevation
+        elev = p_elev + elev_change
+        color = (elev, elev, elev)
 
+        thickness = px2f(cnf.base.w, cnf.border.thickness)
         # setup stroke
-        c.set_source_rgb(*spec.stroke_rgb)
+        c.set_source_rgb(*color)
         c.set_line_join(cairo.LINE_JOIN_ROUND)
-        c.set_line_width(px2f(self.w, spec.groove_px))
-        c.rectangle(spec.x, spec.y, spec.w, spec.h)
+        
+        c.set_line_width(px2f(cnf.base.w, cnf.border.thickness))
+        print("thickness:", thickness)
+
+        c.rectangle(x, y, w, h)
 
         c.stroke()
 
+    def groove(self, cnf):
+        c = self.c
+        inset = cnf.groove.inset
+        inset_f = px2f(cnf.base.w, inset)
+        x = cnf.flat['panel.x']
+        y = cnf.flat['panel.y']
+        w = cnf.flat['panel.w']
+        h = cnf.flat['panel.h']
+
+        x = x + inset_f
+        y = y + inset_f
+        h = h - (inset_f * 2)
+        w = w - (inset_f * 2)
+
+        # Darken stroke to 80%
+        p_elev = cnf.flat['panel.elevation']
+        elev_change = cnf.groove.elevation
+        elev = p_elev + elev_change
+        color = (elev, elev, elev)
+
+        thickness = px2f(cnf.base.w, cnf.groove.thickness)
+        # setup stroke
+        c.set_source_rgb(*color)
+        c.set_line_join(cairo.LINE_JOIN_ROUND)
+        
+        c.set_line_width(px2f(cnf.base.w, cnf.groove.thickness))
+        print("thickness:", thickness)
+
+        c.rectangle(x, y, w, h)
+
+        c.stroke()
 
     def roundrect(self, spec=None, rnd=None, r=0.0):
         cr = self.c
@@ -204,53 +226,3 @@ class Panel(object):
         cr.close_path()
         cr.stroke()
         cr.fill()
-
-
-def square(size=100, depth=255, border=10):
-    img = new_map(size, size, (depth, depth, depth))
-    return img
-
-
-def rect(w=100, h=100, depth=255, border=10):
-    img = np.zeros((h, w, 3), np.uint8)
-    img[:] = (depth, depth, depth)
-    return img
-
-
-def gen_panels(base, n_panels, min_w, max_w, min_h, max_h, rc=0, rm=1):
-
-    print("base w:", base.shape[1])
-    print("base h:", base.shape[0])
-
-    for i in range(n_panels):
-        # Make random size panel
-        wf = random.uniform(min_w, max_w)
-        hf = random.uniform(min_h, max_h)
-        depth = random.randint(0, 200)
-
-        # convert w and f
-        w, h = perc2px(wf, hf, base.shape[1], base.shape[0])
-        print("w:", wf, w)
-        print("h:", hf, h)
-        panel = rect(w, h, depth, 10)
-
-        # add grooves
-        panel = groove_constant(panel, 5, 10, -20)
-
-        # add rivets
-        # rivet = radial_gradient(panel, 24, depth, depth + 50)
-        # rivet = np.invert(rivet)
-
-        # add circle rivet
-
-        # merge rivet onto palen
-        # panel = overlay(panel, rivet, 20, 20)
-        panel = merge(panel, rivet, 20, 20)
-
-        x, y = randfitpos(w, h, base.shape[1], base.shape[0])
-        print(x, y)
-        base = merge(base, panel, x, y)
-
-    # TODO: find a way to make this recursive
-    # we're done
-    return base

@@ -1,36 +1,48 @@
-generator:
+base:
   w: 1024
   h: 1024
-  panel:
-    x: 0.0
-    y: 0.0
-    elevation: 0.5
-  grooves:
-    make: true
-    inset: 10
-    thickess: 10
-    elevation: -0.1
-  rivets:
-    make: true
-    inset: 10
-    spacing: 20
-    elevation: 0.1
-  randomize:
-    - 'x':
-      min: 0.0
-      max: 1.0
-    - 'y':
-      min: 0.0
-      max: 1.0
-    - 'w':
-      min: 0.0
-      max: 1.0
-    - 'h':
-      min: 0.0
-      max: 0.1
-    - 'elevation':
-      min: 0.0
-      max: 0.9
-    - 'stroke_rgb':
-      min: 0.0
-      max: 0.0
+panel:
+  count: 12
+  x: 0.0
+  y: 0.0
+  w: 100
+  h: 100
+  elevation: 0.0
+  fill: true
+border:
+  draw: true
+  inset: 2
+  thickness: 5
+  elevation: 0.1
+groove:
+  draw: true
+  inset: 15
+  thickness: 4
+  elevation: -0.1
+rivets:
+  make: false
+  inset: 10
+  spacing: 20
+  elevation: 0.1
+  diameter: 10
+randomize:
+  'panel.x':
+    kind: 'float_range'
+    min: 0
+    max: 0.6
+  'panel.y':
+    kind: 'float_range'
+    min: 0
+    max: 1.0
+  'panel.w':
+    kind: 'float_range'
+    min: 0.3
+    max: 0.5
+  'panel.h':
+    kind: 'float_range'
+    min: 0.05
+    max: 0.2
+  'panel.elevation':
+    kind: 'float_range'
+    min: 0.0
+    max: 0.9

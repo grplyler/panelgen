@@ -4,10 +4,7 @@ import random
 import cairo
 import math
 import yaml
-
-def load_config(fname):
-    with open(fname) as f:
-        return yaml.safe_load(f)
+from box import Box
 
 def f2px(size, f):
     return size * f
