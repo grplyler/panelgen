@@ -97,7 +97,7 @@ class Panel(object):
             gspec = copy.deepcopy(spec)
 
             # Draw Inner Grove
-            self.groove(gspec, autocolor=False)
+            self.groove(gspec, autocolor=True)
             
         if spec.rivets:
             rspec = copy.deepcopy(spec)
@@ -174,9 +174,9 @@ class Panel(object):
 
         # Darken stroke to 80%
         if autocolor:
-            spec.stroke_rgb = (spec.stroke_rgb[0] * 0.8,
-                                spec.stroke_rgb[1] * 0.8,
-                                spec.stroke_rgb[2] * 0.8)
+            spec.stroke_rgb = (spec.stroke_rgb[0] - 0.1,
+                                spec.stroke_rgb[1] - 0.1,
+                                spec.stroke_rgb[2] - 0.1)
 
         # setup stroke
         c.set_source_rgb(*spec.stroke_rgb)
