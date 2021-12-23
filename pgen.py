@@ -6,11 +6,15 @@ from panelgen.utils import *
 from panelgen import panels
 from panelgen.random import Randomizer
 
-img = new_map(int(argv[1]), int(argv[2]), (0, 0, 0))
+# img = new_map(int(argv[1]), int(argv[2]), (0, 0, 0))
 min_w = 0.02
 max_w = 0.3
 min_h = 0.02
 max_h = 0.3
+
+config = load_config('panelgen/config.yml')
+print(config)
+exit(1)
 
 spec = panels.Spec(fill_rgb=(0.0, 1, 0.0),
                    fill=True,
