@@ -3,3 +3,4 @@ out.png
 normal.png
 *.png
 __pycache__/
+*.egg*

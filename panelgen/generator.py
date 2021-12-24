@@ -10,9 +10,9 @@ from pprint import pprint
 from panelgen.random import randomize
 
 class Generator(object):
-    def __init__(self) -> None:
+    def __init__(self, config) -> None:
         super().__init__()
-        self.cnf = load_config('panelgen/config.yml')
+        self.cnf = load_config(config)
         self.panel = Panel(self.cnf)
     
     def generate(self, ptype):

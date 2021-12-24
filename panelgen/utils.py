@@ -1,10 +1,8 @@
-import cv2
 import numpy as np
 import random
 import cairo
 import math
-import yaml
-from box import Box
+
 
 def f2px(size, f):
     return size * f

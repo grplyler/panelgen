@@ -55,10 +55,10 @@ class Panel(object):
     def save(self, fname='out.png'):
         self.surface.write_to_png(fname)
 
-    def display(self, fname):
-        img = cv2.imread(fname)
-        cv2.imshow("img", img)
-        cv2.waitKey(0)
+    # def display(self, fname):
+    #     img = cv2.imread(fname)
+    #     cv2.imshow("img", img)
+    #     cv2.waitKey(0)
 
     def circle(self,
                cx=0.5,
@@ -190,7 +190,7 @@ class Panel(object):
     def border(self, cnf):
         c = self.c
         inset = cnf.border.inset
-        inset_f = px2f(self.cnf.base.w, inset)
+        inset_f = px2f(cnf.base.w, inset)
         x = cnf.flat['panel.x']
         y = cnf.flat['panel.y']
         w = cnf.flat['panel.w']
