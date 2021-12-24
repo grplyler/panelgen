@@ -25,7 +25,7 @@ types:
       thickness: 4
       elevation: -0.1
     rivets:
-      make: false
+      draw: false
       inset: 10
       spacing: 20
       elevation: 0.1

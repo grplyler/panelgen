@@ -28,11 +28,11 @@ def generate(paneltype, config, size, count, gui):
 
     # If we wanted a gui, launch it
     print(gui)
-    # if gui:
-    app = QtWidgets.QApplication(argv)
-    window = MainWindow()
-    window.show()
-    app.exec_()
+    if gui:
+        app = QtWidgets.QApplication(argv)
+        window = MainWindow(gen)
+        window.show()
+        app.exec_()
     # gen.generate('panel')
 
 if __name__ == "__main__":

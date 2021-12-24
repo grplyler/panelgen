@@ -40,4 +40,4 @@ class Generator(object):
             tcnf = randomize(tcnf)
         
         self.panel.save()
-        self.panel.display('out.png')
+        # self.panel.display('out.png')
