@@ -20,5 +20,6 @@ gen.cnf.base.type = argv[1]
 print("creating", argv[1], "type panels")
 gen.cnf.base.w = int(argv[2])
 gen.cnf.base.h = int(argv[2])
+gen.cnf.base.count = int(argv[3])
 gen.cnf.types[argv[1]].count = int(argv[3])
 gen.generate('panel')

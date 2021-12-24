@@ -21,7 +21,7 @@ class Generator(object):
         # Type configuration
         tcnf = cnf['types'][ptype]
         tcnf.flat = config.make_flat(tcnf)
-        print(tcnf.flat)
+        print(tcnf)
 
         for i in range(cnf.base.count):
             print(tcnf[ptype])
@@ -31,8 +31,8 @@ class Generator(object):
 
             # self.panel.angled(cnf)
             
-            # if cnf.border.draw:
-            #     self.panel.border(cnf)
+                # if tcnf['border'].draw:
+                #     self.panel.border(tcnf)
 
             # if cnf.groove.draw:
             #     self.panel.groove(cnf)

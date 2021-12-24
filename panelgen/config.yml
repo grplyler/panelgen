@@ -15,7 +15,7 @@ types:
       elevation: 0.0
       fill: true
     border:
-      draw: false
+      draw: true
       inset: 2
       thickness: 5
       elevation: 0.1

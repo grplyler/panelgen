@@ -1,5 +1,6 @@
 # A fast - numpy based - CPU functions that take a height map and generate a normal map from it
 
+from sys import argv
 import numpy as np
 import matplotlib.image as mpimg
 import cv2
@@ -66,8 +67,8 @@ def heightMapToNormalMap(height_image_path):
     
     # normalizing does most of the job, but clip the remainder just in case 
     normalMap = np.clip(normalMap,0.0,1.0)
-    mpimg.imsave('normal.png', normalMap)
+    mpimg.imsave(argv[2], normalMap)
     return normalMap
 
-norm = heightMapToNormalMap('out.png')
+norm = heightMapToNormalMap(argv[1])
 # cv2.imwrite('normal.png', norm)

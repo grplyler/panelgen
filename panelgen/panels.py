@@ -190,7 +190,7 @@ class Panel(object):
     def border(self, cnf):
         c = self.c
         inset = cnf.border.inset
-        inset_f = px2f(cnf.base.w, inset)
+        inset_f = px2f(self.cnf.base.w, inset)
         x = cnf.flat['panel.x']
         y = cnf.flat['panel.y']
         w = cnf.flat['panel.w']
