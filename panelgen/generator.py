@@ -1,4 +1,5 @@
 from typing import overload
+from panelgen import config
 from panelgen.utils import *
 from panelgen.panels import Panel
 from box import Box
@@ -14,18 +15,29 @@ class Generator(object):
         self.cnf = load_config('panelgen/config.yml')
         self.panel = Panel(self.cnf)
     
-    def generate(self):
+    def generate(self, ptype):
         cnf = self.cnf
-        for i in range(cnf.panel.count):
-            self.panel.rect(cnf)
-            
-            if cnf.border.draw:
-                self.panel.border(cnf)
 
-            if cnf.groove.draw:
-                self.panel.groove(cnf)
+        # Type configuration
+        tcnf = cnf['types'][ptype]
+        tcnf.flat = config.make_flat(tcnf)
+        print(tcnf)
+
+        for i in range(cnf.base.count):
+            print(tcnf[ptype])
+            if tcnf[ptype].draw:
+                print("drawing panel")
+                self.panel.rect(tcnf)
+
+            # self.panel.angled(cnf)
             
-            cnf = randomize(cnf)
+                # if tcnf['border'].draw:
+                #     self.panel.border(tcnf)
+
+            # if cnf.groove.draw:
+            #     self.panel.groove(cnf)
+            
+            tcnf = randomize(tcnf)
         
         self.panel.save()
         self.panel.display('out.png')

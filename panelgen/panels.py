@@ -1,3 +1,4 @@
+from math import pi
 from numpy import square
 from numpy.core.fromnumeric import reshape
 from panelgen.utils import *
@@ -5,6 +6,7 @@ import numpy as np
 import random
 import cairo
 import copy
+from math import pi
 
 
 class Spec(object):
@@ -88,6 +90,46 @@ class Panel(object):
             c.set_source_rgb(elevation, elevation, elevation)
             c.fill()
 
+    def angled(self, cnf):
+        c = self.c
+
+        # Configure stroke
+        col = random.uniform(0.0, 1.0)
+        c.set_source_rgb(1, 1, 1)
+        c.set_line_width(px2f(self.w, 30))
+        c.set_line_cap(cairo.LINE_CAP_ROUND)
+        c.set_line_join(cairo.LINE_JOIN_ROUND)
+        
+        # Pick and edge
+        choice = random.choice(['left', 'top', 'right', 'bottom'])
+
+        # c.move_to(0, 0)
+        # c.close_path()
+        # if choice == 'left':
+            # choose random x value
+        y = random.uniform(0.0, 1.0)
+
+        # choose random distance
+        distance = random.uniform(0.0, 1.0)
+
+        x = 0.0
+
+        # draw line from left side to distnace
+        print(x, y)
+        c.move_to(x, y)
+        c.line_to(distance, y)
+
+        # Draw arc at 45 degree to to the end of the map
+        arc_dist = random.uniform(0.05, 0.4)
+        c.arc(distance, y, arc_dist, 7*pi/4, 7*pi/4)
+
+        # draw straight line
+        c.rel_line_to(1.0, 0.0)
+        # c.close_path()
+
+        c.stroke()
+
+        print("picked:", choice)
 
     def rivets(self, spec):
         c = self.c
@@ -148,7 +190,7 @@ class Panel(object):
     def border(self, cnf):
         c = self.c
         inset = cnf.border.inset
-        inset_f = px2f(cnf.base.w, inset)
+        inset_f = px2f(self.cnf.base.w, inset)
         x = cnf.flat['panel.x']
         y = cnf.flat['panel.y']
         w = cnf.flat['panel.w']
