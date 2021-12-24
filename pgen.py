@@ -16,10 +16,12 @@ max_h = 0.3
 gen = Generator()
 
 # Pull some configuration from command line
-gen.cnf.base.w = int(argv[1])
-gen.cnf.base.h = int(argv[1])
-gen.cnf.panel.count = int(argv[2])
-gen.generate()
+gen.cnf.base.type = argv[1]
+print("creating", argv[1], "type panels")
+gen.cnf.base.w = int(argv[2])
+gen.cnf.base.h = int(argv[2])
+gen.cnf.types[argv[1]].count = int(argv[3])
+gen.generate('panel')
 # print(gen.conf)
 exit(1)
 

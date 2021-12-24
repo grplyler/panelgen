@@ -13,6 +13,9 @@ def dot_reducer(k1, k2):
     else:
         return k1 + "." + k2
 
+def make_flat(d):
+    return flatten(d, reducer=dot_reducer)
+
 def load_config(fname):
     with open(fname) as f:
         y = yaml.safe_load(f)
