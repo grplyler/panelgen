@@ -27,7 +27,7 @@ class Generator(object):
             print(tcnf[ptype])
             if tcnf[ptype].draw:
                 print("drawing panel")
-                self.panel.rect(tcnf)
+                self.panel.wrap_rect(tcnf)
 
             # self.panel.angled(cnf)
             
@@ -40,4 +40,3 @@ class Generator(object):
             tcnf = randomize(tcnf)
         
         self.panel.save()
-        # self.panel.display('out.png')

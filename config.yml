@@ -2,12 +2,12 @@ base:
   w: 1024
   h: 1024
   type: 'panel'
-  count: 12
+  count: 2
 types:
   panel:
     panel:
       draw: true
-      count: 12
+      count: 2
       x: 0.0
       y: 0.0
       w: 100
@@ -42,11 +42,11 @@ types:
       'panel.w':
         kind: 'float_range'
         min: 0.3
-        max: 0.5
+        max: 0.7
       'panel.h':
         kind: 'float_range'
         min: 0.05
-        max: 0.2
+        max: 0.1
       'panel.elevation':
         kind: 'float_range'
         min: 0.0

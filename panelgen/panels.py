@@ -2,11 +2,13 @@ from math import pi
 from numpy import square
 from numpy.core.fromnumeric import reshape
 from panelgen.utils import *
+from panelgen import draw
 import numpy as np
 import random
 import cairo
 import copy
 from math import pi
+# import cv2
 
 
 class Spec(object):
@@ -89,6 +91,16 @@ class Panel(object):
             elevation = cnf.flat['panel.elevation']
             c.set_source_rgb(elevation, elevation, elevation)
             c.fill()
+
+    def wrap_rect(self, cnf):
+        x = cnf.flat['panel.x']
+        y = cnf.flat['panel.y']
+        w = cnf.flat['panel.w']
+        h = cnf.flat['panel.h']
+        el = cnf.flat['panel.elevation']
+        rgb = (el, el, el)
+        draw.wrap_rect(self.c, x, y, w, h, rgb)
+
 
     def angled(self, cnf):
         c = self.c

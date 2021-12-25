@@ -12,7 +12,7 @@ from panelgen.gui.mainwindow import MainWindow
 @click.option('--config', '-c', help="config.yml")
 @click.option('--size', '-s', default=1024, help="size of generated heightmap")
 @click.option('--count', '-n', default=12, help="number of iterations")
-@click.option('--gui', '-g', default=True, is_flag=True, help="Use graphical user interface")
+@click.option('--gui', '-g', default=False, is_flag=True, help="Use graphical user interface")
 def generate(paneltype, config, size, count, gui):
     """A Height map and Normal Map Generator for Sci-fi panels"""
     print("config:", config)
@@ -33,7 +33,8 @@ def generate(paneltype, config, size, count, gui):
         window = MainWindow(gen)
         window.show()
         app.exec_()
-    # gen.generate('panel')
+
+    gen.generate('panel')
 
 if __name__ == "__main__":
     generate()
