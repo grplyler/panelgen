@@ -1,1 +1,3 @@
 * support wrapping of negative x, y coordinates
+* move image saving to Generator class
+* get rid of extraneous image libraries

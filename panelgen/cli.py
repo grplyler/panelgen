@@ -1,10 +1,10 @@
 import click
 from PyQt5 import QtWidgets, uic
-from sys import argv
-
+import matplotlib.image as mpimg
 from panelgen.utils import *
 from panelgen.generator import Generator, TextureTileGenerator
 from panelgen.gui.mainwindow import MainWindow
+from panelgen.normals import heightMapToNormalMap
 
 @click.group()
 def cli():
@@ -17,12 +17,24 @@ def cli():
 @click.option('--config', '-c', help="config.yml file", default="config.yml")
 @click.option('--count', '-n', help="number of iterations", type=int)
 @click.option('--output', '-o', help="output file (PNG)", default="out.png")
-def from_texture(input, size, config, count, output):
+def tile(input, size, config, count, output):
     print("Loading texture:", input)
     gen = TextureTileGenerator(config)
     gen.cnf.base.count = count
     gen.cnf.types.texture.texture.output = output
+    gen.cnf.types.texture.texture.input = input
     gen.generate('texture')
+
+@cli.command(help="Generate a normal map from a heightmap")
+@click.option('--input', '-i', help="height map png")
+@click.option('--output', '-o', help="output file (PNG)", default="normal.png")
+def normal(input, output):
+    print("Generating normal map...")
+    norm = heightMapToNormalMap(input)
+    print("output:", output)
+    mpimg.imsave(output, norm)
+
+    print("Normal map saved:", output)
 
 # @cli.command()
 # @cli.option('--config', '-c', help="config.yml")

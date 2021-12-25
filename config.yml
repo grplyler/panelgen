@@ -53,7 +53,7 @@ types:
         max: 0.9
   texture:
     texture:
-      input: slab.png
+      input: slab4.png
       output: out.png
       elevation: 0.5
       x: 0

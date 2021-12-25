@@ -69,6 +69,3 @@ def heightMapToNormalMap(height_image_path):
     normalMap = np.clip(normalMap,0.0,1.0)
     mpimg.imsave(argv[2], normalMap)
     return normalMap
-
-norm = heightMapToNormalMap(argv[1])
-# cv2.imwrite('normal.png', norm)
