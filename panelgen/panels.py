@@ -54,7 +54,7 @@ class Panel(object):
         self.w = cnf.base.w
         self.h = cnf.base.h
 
-    def save(self, fname='out.png'):
+    def save(self, fname):
         self.surface.write_to_png(fname)
 
     # def display(self, fname):

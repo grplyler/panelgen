@@ -16,20 +16,17 @@ class Generator(object):
         super().__init__()
         self.cnf = load_config(config)
         self.panel = Panel(self.cnf)
-    
-    @overload
+
     def generate(self, ptype):
         cnf = self.cnf
 
         # Type configuration
         tcnf = cnf['types'][ptype]
         tcnf.rand = config.make_flat(tcnf)
-        print(tcnf)
 
-        for i in range(cnf.base.count):
-            print(tcnf[ptype])
+        for i in range(1, cnf.base.count + 1):
+            print(f"Iteration: [{i}/{cnf.base.count}]")
             if tcnf[ptype].draw:
-                print("drawing panel")
                 self.panel.wrap_rect(tcnf)
 
             # self.panel.angled(cnf)
@@ -42,7 +39,6 @@ class Generator(object):
             
             tcnf = randomize(tcnf)
         
-        self.panel.save()
 
 class TextureTileGenerator(Generator):
     def __init__(self, config) -> None:

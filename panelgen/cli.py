@@ -36,33 +36,35 @@ def normal(input, output):
 
     print("Normal map saved:", output)
 
-# @cli.command()
-# @cli.option('--config', '-c', help="config.yml")
-# @cli.option('--size', '-s', default=1024, help="size of generated heightmap")
-# @cli.option('--count', '-n', default=12, help="number of iterations")
-# @cli.option('--gui', '-g', default=False, is_flag=True, help="Use graphical user interface")
-# def generate(paneltype, config, size, count, gui):
-#     """A Height map and Normal Map Generator for Sci-fi panels"""
-#     print("config:", config)
-#     gen = Generator(config)
+@cli.command(help="Generate rectangular randomized panels")
+@click.option('--config', '-c', help="config.yml")
+@click.option('--size', '-s', default=1024, help="size of generated heightmap")
+@click.option('--count', '-n', default=12, help="number of iterations")
+@click.option('--gui', '-g', default=False, is_flag=True, help="Use graphical user interface")
+@click.option('--output', '-o', help="output file (PNG)", default="out.png")
+def panel(config, size, count, gui, output):
+    """A Height map and Normal Map Generator for Sci-fi panels"""
+    print("Using config:", config)
+    gen = Generator(config)
 
-#     # Pull some configuration from command line
-#     gen.cnf.base.type = paneltype
-#     gen.cnf.base.w = size
-#     gen.cnf.base.h = size
-#     gen.cnf.base.count = count
-#     gen.cnf.types[paneltype].count = count
-#     print(gen.cnf)
+    # Pull some configuration from command line
+    gen.cnf.base.type = 'panel'
+    gen.cnf.base.w = size
+    gen.cnf.base.h = size
+    gen.cnf.base.count = count
+    gen.cnf.types['panel'].count = count
 
-#     # If we wanted a gui, launch it
-#     print(gui)
-#     if gui:
-#         app = QtWidgets.QApplication(argv)
-#         window = MainWindow(gen)
-#         window.show()
-#         app.exec_()
+    # If we wanted a gui, launch it
+    print(gui)
+    if gui:
+        app = QtWidgets.QApplication(argv)
+        window = MainWindow(gen)
+        window.show()
+        app.exec_()
 
-#     gen.generate('panel')
+    gen.generate('panel')
+    gen.panel.save(output)
+    print("Height map saved:", output)
 
 # cli.add_command(generate)
 if __name__ == "__main__":

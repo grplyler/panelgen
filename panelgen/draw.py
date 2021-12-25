@@ -1,5 +1,4 @@
 from PIL import Image, ImageChops
-import random
 
 def wrap_texture(base, tex, x, y, tcnf):
     x = round(base.width * x)
@@ -66,7 +65,6 @@ def wrap_rect(c, x, y, w, h, rgb):
 
     # if x and y are over:
     if x_over < 0.0 and y_over < 0.0:
-        print('xy wrap')
         c.rectangle(0.0, 0.0, x_wrap, y_wrap)
 
     c.fill()

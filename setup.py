@@ -12,7 +12,8 @@ setup(
         "numpy",
         "matplotlib",
         "python-box",
-        "opencv-python"
+        "opencv-python",
+        "pillow"
     ],
     entry_points={
         "console_scripts": [
