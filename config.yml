@@ -1,0 +1,84 @@
+base:
+  w: 1024
+  h: 1024
+  type: 'panel'
+  count: 12
+types:
+  panel:
+    panel:
+      draw: true
+      count: 2
+      x: 0.0
+      y: 0.0
+      w: 100
+      h: 100
+      elevation: 0.0
+      fill: true
+    border:
+      draw: true
+      inset: 2
+      thickness: 5
+      elevation: 0.1
+    groove:
+      draw: false
+      inset: 15
+      thickness: 4
+      elevation: -0.1
+    rivets:
+      draw: false
+      inset: 10
+      spacing: 20
+      elevation: 0.1
+      diameter: 10
+    randomize:
+      'panel.x':
+        kind: 'float_range'
+        min: 0
+        max: 0.6
+      'panel.y':
+        kind: 'float_range'
+        min: 0
+        max: 1.0
+      'panel.w':
+        kind: 'float_range'
+        min: 0.3
+        max: 0.7
+      'panel.h':
+        kind: 'float_range'
+        min: 0.05
+        max: 0.1
+      'panel.elevation':
+        kind: 'float_range'
+        min: 0.0
+        max: 0.9
+  texture:
+    texture:
+      input: slab4.png
+      output: out.png
+      elevation: 0.5
+      x: 0
+      y: 0
+      w: 0
+      h: 0
+    randomize:
+      'texture.elevation':
+        kind: 'float_range'
+        min: 0.1
+        max: 1.0
+      'texture.x':
+        kind: 'float_range'
+        min: 0.0
+        max: 1.0
+      'texture.y':
+        kind: 'float_range'
+        min: 0.0
+        max: 1.0
+      'texture.w':
+        kind: 'float_range'
+        min: 0.3
+        max: 0.7
+      'texture.h':
+        kind: 'float_range'
+        min: 0.05
+        max: 0.1
+        

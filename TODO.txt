@@ -1,0 +1,5 @@
+* support wrapping of negative x, y coordinates
+* move image saving to Generator class
+* get rid of extraneous image libraries
+* update angled and groove generator
+* configurable output for rectangular panel generator

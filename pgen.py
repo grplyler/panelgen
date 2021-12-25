@@ -13,7 +13,7 @@ max_w = 0.3
 min_h = 0.02
 max_h = 0.3
 
-gen = Generator()
+gen = Generator('config.yml')
 
 # Pull some configuration from command line
 gen.cnf.base.type = argv[1]
@@ -23,3 +23,4 @@ gen.cnf.base.h = int(argv[2])
 gen.cnf.base.count = int(argv[3])
 gen.cnf.types[argv[1]].count = int(argv[3])
 gen.generate('panel')
+# gen.display()
