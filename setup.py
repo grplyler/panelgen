@@ -16,7 +16,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "panelgen = panelgen.cli:generate"
+            "panelgen = panelgen.cli:cli"
         ]
     },
 )

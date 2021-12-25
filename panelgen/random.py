@@ -9,12 +9,10 @@ def float_range(min, max):
 
 def randomize(cnf):
     for key, value in cnf.randomize.items():
-        print(key, value)
-        print(cnf.flat[key])
         r = None
         if value['kind'] == 'float_range':
             r = float_range(value['min'], value['max'])
-            cnf.flat[key] = r
+            cnf.rand[key] = r
 
     return cnf
 

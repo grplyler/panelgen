@@ -1,3 +1,44 @@
+from PIL import Image, ImageChops
+import random
+
+def wrap_texture(base, tex, x, y, tcnf):
+    x = round(base.width * x)
+    y = round(base.height * y)
+    elev = round(255 * tcnf.rand['texture.elevation'])
+
+    # Set height of texture
+    mult = Image.new('RGBA', tex.size, (elev, elev, elev))
+    tex = ImageChops.multiply(tex, mult)
+
+    # find x overlap
+    x_over = base.width - (x + tex.width)
+    y_over = base.height - (y + tex.height)
+
+    if x_over < 0:
+        left = tex.width - abs(x_over)
+        top = 0
+        right = tex.width
+        bottom = tex.height
+        crop = tex.crop((left, top, right, bottom))
+        base.paste(crop, (0, y), crop)
+
+    if y_over < 0:
+        left = 0
+        top = tex.height - abs(y_over)
+        right = tex.width
+        bottom = tex.height
+        crop = tex.crop((left, top, right, bottom))
+        base.paste(crop, (x, 0), crop)
+
+    if y_over < 0 and x_over < 0:
+        left = tex.width - abs(x_over)
+        top = tex.height - abs(y_over)
+        right = tex.width
+        bottom = tex.height
+        crop = tex.crop((left, top, right, bottom))
+        base.paste(crop, (0, 0), crop)
+
+    base.paste(tex, (x, y), tex)
 
 # a rectangle that wraps round on x and y
 def wrap_rect(c, x, y, w, h, rgb):

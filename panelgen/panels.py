@@ -85,19 +85,19 @@ class Panel(object):
         c.set_line_cap(cairo.LINE_CAP_ROUND)
         c.set_line_join(cairo.LINE_JOIN_ROUND)
         c.set_fill_rule(cairo.FILL_RULE_WINDING)
-        c.rectangle(cnf.flat['panel.x'], cnf.flat['panel.y'],
-                    cnf.flat['panel.w'], cnf.flat['panel.h'])
+        c.rectangle(cnf.rand['panel.x'], cnf.rand['panel.y'],
+                    cnf.rand['panel.w'], cnf.rand['panel.h'])
         if cnf.panel.fill:
-            elevation = cnf.flat['panel.elevation']
+            elevation = cnf.rand['panel.elevation']
             c.set_source_rgb(elevation, elevation, elevation)
             c.fill()
 
     def wrap_rect(self, cnf):
-        x = cnf.flat['panel.x']
-        y = cnf.flat['panel.y']
-        w = cnf.flat['panel.w']
-        h = cnf.flat['panel.h']
-        el = cnf.flat['panel.elevation']
+        x = cnf.rand['panel.x']
+        y = cnf.rand['panel.y']
+        w = cnf.rand['panel.w']
+        h = cnf.rand['panel.h']
+        el = cnf.rand['panel.elevation']
         rgb = (el, el, el)
         draw.wrap_rect(self.c, x, y, w, h, rgb)
 
@@ -203,10 +203,10 @@ class Panel(object):
         c = self.c
         inset = cnf.border.inset
         inset_f = px2f(cnf.base.w, inset)
-        x = cnf.flat['panel.x']
-        y = cnf.flat['panel.y']
-        w = cnf.flat['panel.w']
-        h = cnf.flat['panel.h']
+        x = cnf.rand['panel.x']
+        y = cnf.rand['panel.y']
+        w = cnf.rand['panel.w']
+        h = cnf.rand['panel.h']
 
         x = x + inset_f
         y = y + inset_f
@@ -214,7 +214,7 @@ class Panel(object):
         w = w - (inset_f * 2)
 
         # Darken stroke to 80%
-        p_elev = cnf.flat['panel.elevation']
+        p_elev = cnf.rand['panel.elevation']
         elev_change = cnf.border.elevation
         elev = p_elev + elev_change
         color = (elev, elev, elev)
@@ -235,10 +235,10 @@ class Panel(object):
         c = self.c
         inset = cnf.groove.inset
         inset_f = px2f(cnf.base.w, inset)
-        x = cnf.flat['panel.x']
-        y = cnf.flat['panel.y']
-        w = cnf.flat['panel.w']
-        h = cnf.flat['panel.h']
+        x = cnf.rand['panel.x']
+        y = cnf.rand['panel.y']
+        w = cnf.rand['panel.w']
+        h = cnf.rand['panel.h']
 
         x = x + inset_f
         y = y + inset_f
@@ -246,7 +246,7 @@ class Panel(object):
         w = w - (inset_f * 2)
 
         # Darken stroke to 80%
-        p_elev = cnf.flat['panel.elevation']
+        p_elev = cnf.rand['panel.elevation']
         elev_change = cnf.groove.elevation
         elev = p_elev + elev_change
         color = (elev, elev, elev)
